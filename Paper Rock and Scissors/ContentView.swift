@@ -55,26 +55,28 @@ struct ContentView: View {
     var body: some View {
         VStack{
         Text("Score: \(score)")
-            Text(String(isWin))
-            Text(gameMove.rawValue)
+            Image(systemName: String(gameMove == moves.paper ? "doc.fill": gameMove == moves.rock ? "oval.fill" : "scissors"))
+            Text(isWin ? "Win" : "Loose")
             HStack{
-                Button("paper"){
+        
+                Button{
                     calculateScore(playerMove:  moves.paper)
                     newMove()
+                }label: {
+                    Image(systemName: "doc.fill")
                 }
-        
-                Button("rock"){
+                Button{
                     calculateScore(playerMove:  moves.rock)
                     newMove()
-                   
+                }label: {
+                    Image(systemName: "oval.fill")
                 }
-          
-                Button("scissors"){
+                Button{
                     calculateScore(playerMove:  moves.scissors)
                     newMove()
-                   
+                }label: {
+                    Image(systemName: "scissors")
                 }
-            
                 
             }
         }
