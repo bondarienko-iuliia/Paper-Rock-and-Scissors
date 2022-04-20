@@ -6,10 +6,40 @@
 //
 
 import SwiftUI
+extension Color{
+    static let lightGray = Color(red: 0.94, green: 0.94, blue: 0.95)
+    static let darkerGray = Color(red: 0.92, green: 0.92, blue: 0.93)
+}
+
+struct NeumorphicButtonStyle: ButtonStyle{
+    func makeBody(configuration: Self.Configuration)-> some View {
+        configuration.label
+            .padding(25)
+            .background(
+                Group{
+                    if(configuration.isPressed){
+                    Circle()
+                        .fill(Color.lightGray)
+                      
+                }
+                else{
+                    Circle()
+                        .fill(Color.lightGray)
+                        .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
+                        .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
+
+                    }
+                    
+                }
+            )
+    }
+    
+    
+}
 
 struct ContentView: View {
     @State var gameMove = moves.paper
-   @State var isWin = true
+    @State var isWin = true
     @State var score = 0
     @State var showAlert = false
     enum moves: String, CaseIterable{
@@ -53,32 +83,66 @@ struct ContentView: View {
 
     }
     var body: some View {
+        ZStack{
+            Color.lightGray
+                .ignoresSafeArea()
         VStack{
         Text("Score: \(score)")
-            Image(systemName: String(gameMove == moves.paper ? "doc.fill": gameMove == moves.rock ? "oval.fill" : "scissors"))
+            Spacer()
+            VStack{
+            Image(systemName: String(gameMove == moves.paper ? "doc.fill": gameMove == moves.rock ? "oval.fill" : "scissors")).font(.largeTitle)
             Text(isWin ? "Win" : "Loose")
-            HStack{
-        
-                Button{
-                    calculateScore(playerMove:  moves.paper)
-                    newMove()
-                }label: {
-                    Image(systemName: "doc.fill")
+            }.frame(maxWidth: .infinity, maxHeight: 200)
+                .background(Color.lightGray)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+            
+                .cornerRadius(20)
+                .overlay{
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.gray, lineWidth: 4)
+                        .blur(radius: 4)
+                        .offset(x: 2, y: 2)
+                        .mask(RoundedRectangle(cornerRadius: 20).fill(LinearGradient(gradient: Gradient(colors : [Color.clear, Color.black]), startPoint: .topLeading, endPoint: .bottomLeading)))
+                        .overlay{
+                                           RoundedRectangle(cornerRadius: 20)
+                                               .stroke(Color.white, lineWidth: 8)
+                                               .blur(radius: 4)
+                                               .offset(x: -2, y: -2)
+                                               .mask(RoundedRectangle(cornerRadius: 20).fill(LinearGradient(gradient: Gradient(colors : [Color.clear, Color.black]), startPoint: .topLeading, endPoint: .bottomLeading)))
+
+
+                                       }
+                                   
+
                 }
+               
+            
+            Spacer()
+          
+            HStack(spacing: 35){
+        
+                Button {
+                    calculateScore(playerMove:  moves.rock)
+                    newMove()
+                }label:{
+                    Image(systemName: "doc.fill")
+                    }.buttonStyle(NeumorphicButtonStyle())
+                    
                 Button{
                     calculateScore(playerMove:  moves.rock)
                     newMove()
                 }label: {
                     Image(systemName: "oval.fill")
-                }
+                }.buttonStyle(NeumorphicButtonStyle())
                 Button{
                     calculateScore(playerMove:  moves.scissors)
                     newMove()
                 }label: {
                     Image(systemName: "scissors")
-                }
+                }.buttonStyle(NeumorphicButtonStyle())
                 
-            }
+            }.padding()
+        }.padding()
         }
         
     }
