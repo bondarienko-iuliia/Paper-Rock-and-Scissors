@@ -1,5 +1,6 @@
 # Paper-Rock-and-Scissors
 
+![alt text](http://PRS.PNG)
 ## Description
 
 * Each turn of the game the app will randomly pick either rock, paper, or scissors.
