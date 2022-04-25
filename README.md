@@ -1,6 +1,7 @@
 # Paper-Rock-and-Scissors
 
-![alt text](http://PRS.PNG)
+![alt text](https://github.com/bondarienko-iuliia/Paper-Rock-and-Scissors/blob/main/PRS.PNG)
+
 ## Description
 
 * Each turn of the game the app will randomly pick either rock, paper, or scissors.
