@@ -15,7 +15,7 @@
 ## What I learned
 
 * UI features:
-  * ButtinStyle
+  * ButtonStyle
   * frame
   * overlay
    
